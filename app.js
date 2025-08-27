@@ -227,11 +227,90 @@ function openTab(tabName) {
     el.classList.remove("active");
     el.classList.add("hidden");
   });
+  
+  // Remove active class from all tab buttons
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+  
   // Show selected tab
   const selectedTab = document.getElementById(tabName);
   selectedTab.classList.add("active");
   selectedTab.classList.remove("hidden");
+  
+  // Add active class to clicked button
+  event.target.classList.add("active");
 }
+// Side Panel Functions
+function toggleSidePanel() {
+  const sidePanel = document.getElementById('sidePanel');
+  const overlay = document.getElementById('sidePanel-overlay');
+  const body = document.body;
+  
+  const isOpen = sidePanel.classList.contains('open');
+  
+  if (isOpen) {
+    // Close panel
+    sidePanel.classList.remove('open');
+    overlay.classList.remove('active');
+    body.classList.remove('side-panel-open');
+  } else {
+    // Open panel
+    sidePanel.classList.add('open');
+    overlay.classList.add('active');
+    body.classList.add('side-panel-open');
+  }
+}
+
+// Navigation functions
+function navigateTo(section) {
+  // Close the side panel first
+  toggleSidePanel();
+  
+  // Add a small delay to let the panel close animation complete
+  setTimeout(() => {
+    switch(section) {
+      case 'dashboard':
+        // Redirect to index.html (dashboard/home page)
+        window.location.href = 'index.html';
+        break;
+      case 'blogs':
+        // Redirect to blogs page
+        window.location.href = 'blogs.html';
+        break;
+      case 'research':
+        // Redirect to research papers page
+        window.location.href = 'research-papers.html';
+        break;
+      default:
+        console.log('Unknown navigation target:', section);
+    }
+  }, 300);
+}
+
+// Close side panel when clicking outside (on overlay)
+document.addEventListener('click', function(event) {
+  const sidePanel = document.getElementById('sidePanel');
+  const hamburgerMenu = document.querySelector('.hamburger-menu');
+  
+  // If side panel is open and click is outside panel and not on hamburger menu
+  if (sidePanel.classList.contains('open') && 
+      !sidePanel.contains(event.target) && 
+      !hamburgerMenu.contains(event.target)) {
+    toggleSidePanel();
+  }
+});
+
+// Close side panel on escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    const sidePanel = document.getElementById('sidePanel');
+    if (sidePanel.classList.contains('open')) {
+      toggleSidePanel();
+    }
+  }
+});
+
 // Set default tab
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("chart").classList.add("active");

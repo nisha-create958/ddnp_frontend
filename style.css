@@ -4,40 +4,164 @@ body {
   background: #f8f9fa;
 }
 
-header {
+/* Amazon-style Header */
+.app-header {
   background: #1e1e2f;
-  color: white;
-  text-align: center;
-  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  justify-content: center;
+  position: relative;
+}
+
+/* Logo box positioned right after hamburger */
+.logo-box {
+  position: fixed; /* Fixed positioning relative to viewport */
+  left: 70px; /* Right after hamburger menu */
+  top: 26px; /* Fixed top position */
+  z-index: 99;
+}
+
+.header-logo {
+  width: 160px;
+  height: 50px;
+  object-fit: contain;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.app-name {
   margin: 0;
-  font-size: 24px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-nav {
-  margin-top: 10px;
+.header-right {
+  display: none; /* Hide since we're centering text absolutely */
+}
+
+/* Controls Section */
+.controls-section {
+  background: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px 0;
+}
+
+.controls-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.tab-navigation {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .tab-btn {
-  margin: 3px;
-  padding: 8px 12px;
-  background: #0077cc;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: #666;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .tab-btn:hover {
-  background: #005fa3;
+  background: #f5f5f5;
+  border-color: #bbb;
+  color: #333;
 }
 
-#controls {
-  text-align: center;
-  margin: 15px 0;
+.tab-btn.active {
+  background: #0077cc;
+  color: white;
+  border-color: #0077cc;
+  box-shadow: 0 2px 4px rgba(0, 119, 204, 0.2);
+}
+
+.search-controls {
+  display: flex;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-input {
+  width: 80px;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0077cc;
+  box-shadow: 0 0 0 2px rgba(0, 119, 204, 0.1);
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.search-btn:hover {
+  background: #005fa3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 119, 204, 0.3);
 }
 
 #chartArea {
@@ -81,4 +205,301 @@ nav {
 
 .hidden {
   display: none;
+}
+
+/* Hamburger Menu Button */
+.hamburger-menu {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1002;
+  background: #1e1e2f;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Hide hamburger when side panel is open */
+body.side-panel-open .hamburger-menu {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hamburger-menu:hover {
+  background: #2a2a3e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger-line {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #ffffff;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger-menu:hover .hamburger-line {
+  background: #0077cc;
+}
+
+/* Side Panel */
+.side-panel {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 320px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.side-panel.open {
+  left: 0;
+}
+
+.side-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #f8f9fa;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+/* Fallback if logo doesn't load */
+.logo-img:not([src]), .logo-img[src=""] {
+  display: none;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e1e2f;
+  letter-spacing: 0.5px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e5e5e5;
+  color: #1e1e2f;
+}
+
+/* Side Navigation */
+.side-nav {
+  padding: 16px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: #f8f9fa;
+  border-left-color: #0077cc;
+  color: #0077cc;
+}
+
+.nav-item:active {
+  background: #e8f4fd;
+}
+
+.nav-icon {
+  margin-right: 16px;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.nav-item span {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.redirect-icon {
+  margin-left: 12px;
+  opacity: 0.6;
+  color: inherit;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover .redirect-icon {
+  opacity: 1;
+  transform: translateX(2px) translateY(-2px);
+}
+
+/* Side Panel Overlay */
+.side-panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.side-panel-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .side-panel {
+    width: 280px;
+  }
+  
+  .hamburger-menu {
+    top: 15px;
+    left: 15px;
+    padding: 10px;
+  }
+  
+  .hamburger-line {
+    width: 22px;
+    height: 2.5px;
+  }
+  
+  .nav-item {
+    padding: 14px 20px;
+  }
+  
+  .nav-item span {
+    font-size: 15px;
+  }
+  
+  /* Header responsive */
+  .header-content {
+    padding: 8px 16px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+    min-height: auto;
+  }
+  
+  .header-left {
+    justify-self: center;
+    order: 1;
+  }
+  
+  .header-center {
+    order: 2;
+  }
+  
+  .header-right {
+    display: none;
+  }
+  
+  .header-logo {
+    width: 100px;
+    height: 32px;
+  }
+  
+  .app-name {
+    font-size: 24px;
+  }
+  
+  /* Controls responsive */
+  .controls-container {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 16px;
+    align-items: stretch;
+  }
+  
+  .tab-navigation {
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .tab-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .search-controls {
+    justify-content: center;
+  }
+  
+  .input-group {
+    gap: 8px;
+  }
+  
+  .search-input {
+    width: 70px;
+    padding: 8px 10px;
+  }
+  
+  .search-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .side-panel {
+    width: 100vw;
+    left: -100vw;
+  }
+  
+  .side-panel.open {
+    left: 0;
+  }
+}
+
+/* Animation for hamburger menu when panel is open */
+body.side-panel-open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(9px, 9px);
+}
+
+body.side-panel-open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+body.side-panel-open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(9px, -9px);
 }
