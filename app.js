@@ -34,7 +34,17 @@ fetch(`${API_BASE}/api/nuclei`)
 function drawChart() {
   let z = nuclearData.map(d => parseInt(d.Z));
   let n = nuclearData.map(d => parseInt(d.N));
-  let colors = nuclearData.map(d => d.M_exp ? parseFloat(d.M_exp) : null);
+  
+  // Use ELMA theoretical values when experimental data is not available
+  let colors = nuclearData.map(d => {
+    if (d.M_exp && d.M_exp !== "-") {
+      return parseFloat(d.M_exp);
+    } else if (d.M_ELMA && d.M_ELMA !== "-") {
+      return parseFloat(d.M_ELMA);
+    } else {
+      return 0; // Default value for missing data
+    }
+  });
 
   // Create element symbols for better hover info (like NNDC)
   let elementSymbols = {
@@ -52,7 +62,12 @@ function drawChart() {
     111: 'Rg', 112: 'Cn', 113: 'Nh', 114: 'Fl', 115: 'Mc', 116: 'Lv', 117: 'Ts', 118: 'Og', 119: 'Uue', 120: 'Ubn'
   };
 
-  // Color scale (like NNDC)
+  // Calculate color range for better visualization
+  let validColors = colors.filter(c => c !== null && !isNaN(c));
+  let minColor = Math.min(...validColors);
+  let maxColor = Math.max(...validColors);
+  
+  // Color scale with better range and custom colorscale
   let trace = {
     x: n,
     y: z,
@@ -62,15 +77,41 @@ function drawChart() {
       size: 8,
       symbol: "square",
       color: colors,
-      colorscale: "Jet",
+      colorscale: [
+        [0.0, '#000080'],    // Dark blue for most negative (most stable)
+        [0.2, '#0000FF'],    // Blue
+        [0.4, '#00FFFF'],    // Cyan
+        [0.5, '#00FF00'],    // Green
+        [0.6, '#FFFF00'],    // Yellow
+        [0.8, '#FF8000'],    // Orange
+        [1.0, '#FF0000']     // Red for most positive (least stable)
+      ],
+      cmin: minColor,
+      cmax: maxColor,
       showscale: true,
       colorbar: {
-        title: "Mass Excess (MeV)"
+        title: "Mass Excess (MeV)",
+        titleside: "right",
+        thickness: 20,
+        len: 0.7
       }
     },
     text: nuclearData.map(d => {
       let symbol = elementSymbols[parseInt(d.Z)] || `Z${d.Z}`;
-      return `<b>${symbol}-${d.A}</b><br>Z=${d.Z}, N=${d.N}<br>Mass Excess: ${d.M_exp || 'N/A'} MeV`;
+      let massValue, dataType;
+      
+      if (d.M_exp && d.M_exp !== "-") {
+        massValue = d.M_exp;
+        dataType = "Experimental";
+      } else if (d.M_ELMA && d.M_ELMA !== "-") {
+        massValue = d.M_ELMA;
+        dataType = "ELMA Theory";
+      } else {
+        massValue = "N/A";
+        dataType = "No Data";
+      }
+      
+      return `<b>${symbol}-${d.A}</b><br>Z=${d.Z}, N=${d.N}<br>Mass Excess: ${massValue} MeV<br><i>(${dataType})</i>`;
     }),
     hovertemplate: '%{text}<extra></extra>',
     hoverlabel: {
