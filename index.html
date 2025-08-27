@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Driven Nuclear Prediction</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>DATA DRIVEN NUCLEAR PREDICTION</h1>
+    <nav>
+      <button class="tab-btn" onclick="openTab('chart')">N–Z Chart</button>
+      <button class="tab-btn" onclick="openTab('halflife')">Half-life</button>
+      <button class="tab-btn" onclick="openTab('qalpha')">Qα</button>
+      <button class="tab-btn" onclick="openTab('sn')">Sn</button>
+      <button class="tab-btn" onclick="openTab('sp')">Sp</button>
+      <button class="tab-btn" onclick="openTab('s2n')">S2n</button>
+      <button class="tab-btn" onclick="openTab('s2p')">S2p</button>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <div id="controls">
+    <input type="number" id="zInput" placeholder="Z">
+    <input type="number" id="nInput" placeholder="N">
+    <button onclick="searchNucleus()">Search</button>
+  </div>
+
+  <!-- Tabs -->
+  <div id="chart" class="tab-content">
+    <div id="chartArea"></div>
+    <div id="infoBox"></div>
+  </div>
+
+  <div id="halflife" class="tab-content hidden">
+    <p>Half-life data will be updated soon.</p>
+  </div>
+
+  <div id="qalpha" class="tab-content hidden">
+    <p>Qα data will be updated soon.</p>
+  </div>
+
+  <div id="sn" class="tab-content hidden">
+    <p>Sn data will be updated soon.</p>
+  </div>
+
+  <div id="sp" class="tab-content hidden">
+    <p>Sp data will be updated soon.</p>
+  </div>
+
+  <div id="s2n" class="tab-content hidden">
+    <p>S2n data will be updated soon.</p>
+  </div>
+
+  <div id="s2p" class="tab-content hidden">
+    <p>S2p data will be updated soon.</p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

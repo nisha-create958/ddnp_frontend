@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+}
+
+header {
+  background: #1e1e2f;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+nav {
+  margin-top: 10px;
+}
+
+.tab-btn {
+  margin: 3px;
+  padding: 8px 12px;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tab-btn:hover {
+  background: #005fa3;
+}
+
+#controls {
+  text-align: center;
+  margin: 15px 0;
+}
+
+#chartArea {
+  width: 100%;
+  height: 600px;
+  position: relative;
+}
+
+#infoBox {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #333;
+  padding: 10px;
+  font-size: 14px;
+  z-index: 10;
+  display: none;
+}
+
+#infoBox table {
+  border-collapse: collapse;
+  width: 250px;
+}
+
+#infoBox th, #infoBox td {
+  border: 1px solid #444;
+  padding: 4px;
+  text-align: left;
+}
+
+.tab-content {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
