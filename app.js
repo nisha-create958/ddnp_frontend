@@ -154,7 +154,24 @@ function drawChart() {
 
   // Clear any loading text and plot the chart
   document.getElementById("chartArea").innerHTML = "";
-  Plotly.newPlot("chartArea", [trace], layout);
+  
+  // Configuration to remove pan, box select, lasso select, reset, and axes options
+  let config = {
+    displayModeBar: true,
+    modeBarButtonsToRemove: [
+      'pan2d',
+      'select2d',
+      'lasso2d',
+      'resetScale2d',
+      'autoScale2d',
+      'toggleSpikelines',
+      'hoverCompareCartesian',
+      'hoverClosestCartesian'
+    ],
+    displaylogo: false
+  };
+  
+  Plotly.newPlot("chartArea", [trace], layout, config);
 
   // Click handler for chart points
   document.getElementById("chartArea").on('plotly_click', function(data) {
