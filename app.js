@@ -336,7 +336,6 @@ function searchNucleus() {
             showInfo(nucleus, xPos, yPos);
           }, 100);
         } else {
-          // Fallback if we can't get the plot layout
           setTimeout(() => {
             showInfo(nucleus);
           }, 100);
