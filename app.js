@@ -67,6 +67,15 @@ function drawChart() {
   let minColor = Math.min(...validColors);
   let maxColor = Math.max(...validColors);
   
+  // Expand the color range to show more variation (compress the scale)
+  // This will make more nuclei visible in different colors instead of black
+  let colorRange = maxColor - minColor;
+  let expandedMin = minColor + colorRange * 0.1;  // Start from 10% of range
+  let expandedMax = minColor + colorRange * 0.7;  // End at 70% of range
+  
+  console.log(`Original range: ${minColor.toFixed(2)} to ${maxColor.toFixed(2)}`);
+  console.log(`Expanded range: ${expandedMin.toFixed(2)} to ${expandedMax.toFixed(2)}`);
+  
   // Color scale with better range and custom colorscale
   let trace = {
     x: n,
@@ -86,8 +95,8 @@ function drawChart() {
         [0.8, '#FF8000'],    // Orange
         [1.0, '#FF0000']     // Red for most positive (least stable)
       ],
-      cmin: minColor,
-      cmax: maxColor,
+      cmin: expandedMin,
+      cmax: expandedMax,
       showscale: true,
       colorbar: {
         title: "Mass Excess (MeV)",
