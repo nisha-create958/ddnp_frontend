@@ -1,5 +1,8 @@
-// Updated to your deployed Render backend URL
+// Backend URL - Check if this is correct!
 const API_BASE = "https://ddnp-backend.onrender.com";
+// Uncomment the line below to test with a local backend instead
+// const API_BASE = "http://localhost:10000";
+console.log("Using API base URL:", API_BASE);
 
 let nuclearData = [];
 
@@ -176,34 +179,107 @@ function drawChart() {
   // Click handler for chart points
   document.getElementById("chartArea").on('plotly_click', function(data) {
     let pointIndex = data.points[0].pointIndex;
-    showInfo(nuclearData[pointIndex]);
+    let point = data.points[0];
+    
+    // Get the pixel coordinates of the clicked point
+    let xPos = point.xaxis.d2p(point.x) + point.xaxis._offset;
+    let yPos = point.yaxis.d2p(point.y) + point.yaxis._offset;
+    
+    showInfo(nuclearData[pointIndex], xPos, yPos);
   });
 }
 
-// Display details inside floating infoBox
-function showInfo(nucleus) {
-  let box = document.getElementById("infoBox");
+// Display details in info box at the clicked point position
+function showInfo(nucleus, x, y) {
+  console.log('Showing info for nucleus:', nucleus);
+  
+  const box = document.getElementById("infoBox");
+  if (!box) {
+    console.error('Info box element not found!');
+    return;
+  }
+  
+  // Get element symbol
+  const elementSymbols = {
+    1: 'H', 2: 'He', 3: 'Li', 4: 'Be', 5: 'B', 6: 'C', 7: 'N', 8: 'O', 9: 'F', 10: 'Ne',
+    11: 'Na', 12: 'Mg', 13: 'Al', 14: 'Si', 15: 'P', 16: 'S', 17: 'Cl', 18: 'Ar', 19: 'K', 20: 'Ca',
+    21: 'Sc', 22: 'Ti', 23: 'V', 24: 'Cr', 25: 'Mn', 26: 'Fe', 27: 'Co', 28: 'Ni', 29: 'Cu', 30: 'Zn',
+    31: 'Ga', 32: 'Ge', 33: 'As', 34: 'Se', 35: 'Br', 36: 'Kr', 37: 'Rb', 38: 'Sr', 39: 'Y', 40: 'Zr',
+    41: 'Nb', 42: 'Mo', 43: 'Tc', 44: 'Ru', 45: 'Rh', 46: 'Pd', 47: 'Ag', 48: 'Cd', 49: 'In', 50: 'Sn',
+    51: 'Sb', 52: 'Te', 53: 'I', 54: 'Xe', 55: 'Cs', 56: 'Ba', 57: 'La', 58: 'Ce', 59: 'Pr', 60: 'Nd',
+    61: 'Pm', 62: 'Sm', 63: 'Eu', 64: 'Gd', 65: 'Tb', 66: 'Dy', 67: 'Ho', 68: 'Er', 69: 'Tm', 70: 'Yb',
+    71: 'Lu', 72: 'Hf', 73: 'Ta', 74: 'W', 75: 'Re', 76: 'Os', 77: 'Ir', 78: 'Pt', 79: 'Au', 80: 'Hg',
+    81: 'Tl', 82: 'Pb', 83: 'Bi', 84: 'Po', 85: 'At', 86: 'Rn', 87: 'Fr', 88: 'Ra', 89: 'Ac', 90: 'Th',
+    91: 'Pa', 92: 'U', 93: 'Np', 94: 'Pu', 95: 'Am', 96: 'Cm', 97: 'Bk', 98: 'Cf', 99: 'Es', 100: 'Fm'
+  };
+  
+  const symbol = elementSymbols[parseInt(nucleus.Z)] || `Z${nucleus.Z}`;
+  
+  // Set the content directly, like in the original working code
   box.style.display = "block";
   box.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <strong>Isotope Details</strong>
-      <button onclick="closeInfoBox()" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 20px; height: 20px; cursor: pointer; font-size: 14px;">&times;</button>
+    <div class="info-box-header">
+      <h4>${symbol}-${nucleus.A} Isotope</h4>
+      <button class="info-close-btn" onclick="closeInfoBox()">&times;</button>
     </div>
-    <table>
-      <tr><td>Z</td><td>${nucleus.Z}</td></tr>
-      <tr><td>N</td><td>${nucleus.N}</td></tr>
-      <tr><td>A</td><td>${nucleus.A}</td></tr>
-      <tr><td>Mass Excess (Exp)</td><td>${nucleus.M_exp ?? "Not available"}</td></tr>
-      <tr><td>Mass Excess (ELMA)</td><td>${nucleus.M_ELMA ?? "Not available"}</td></tr>
-      <tr><td>Binding Energy (Exp)</td><td>${nucleus["B.E_exp"] ?? "Not available"}</td></tr>
-      <tr><td>Binding Energy (ELMA)</td><td>${nucleus["B.E_ELMA"] ?? "Not available"}</td></tr>
-    </table>
+    <div class="info-box-content">
+      <table>
+        <tr><th>Property</th><th>Value</th></tr>
+        <tr><td>Element Symbol</td><td><strong>${symbol}</strong></td></tr>
+        <tr><td>Proton Number (Z)</td><td>${nucleus.Z}</td></tr>
+        <tr><td>Neutron Number (N)</td><td>${nucleus.N}</td></tr>
+        <tr><td>Mass Number (A)</td><td>${nucleus.A}</td></tr>
+        <tr><td>Mass Excess (Exp)</td><td>${nucleus.M_exp && nucleus.M_exp !== "-" ? nucleus.M_exp + " MeV" : "Not available"}</td></tr>
+        <tr><td>Mass Excess (ELMA)</td><td>${nucleus.M_ELMA && nucleus.M_ELMA !== "-" ? nucleus.M_ELMA + " MeV" : "Not available"}</td></tr>
+        <tr><td>Binding Energy (Exp)</td><td>${nucleus["B.E_exp"] && nucleus["B.E_exp"] !== "-" ? nucleus["B.E_exp"] + " MeV" : "Not available"}</td></tr>
+        <tr><td>Binding Energy (ELMA)</td><td>${nucleus["B.E_ELMA"] && nucleus["B.E_ELMA"] !== "-" ? nucleus["B.E_ELMA"] + " MeV" : "Not available"}</td></tr>
+      </table>
+    </div>
   `;
+  
+  // Position the info box directly at the clicked point
+  // If x and y are provided (from click or search), position the box there
+  if (x !== undefined && y !== undefined) {
+    const chartArea = document.getElementById("chartArea");
+    const chartRect = chartArea.getBoundingClientRect();
+    
+    // Calculate position, keeping the box within the chart boundaries
+    // Position box so its top-left corner is at the point
+    let posX = x;
+    let posY = y;
+    
+    // Make sure box stays within chart area
+    const boxWidth = 350;
+    const boxHeight = 300;
+    
+    // Adjust if box would go off right edge
+    if (posX + boxWidth > chartRect.width) {
+      posX = posX - boxWidth;
+    }
+    
+    // Adjust if box would go off bottom edge
+    if (posY + boxHeight > chartRect.height) {
+      posY = posY - boxHeight;
+    }
+    
+    // Ensure box doesn't go off top or left edges
+    posX = Math.max(posX, 0);
+    posY = Math.max(posY, 0);
+    
+    // Apply the position
+    box.style.left = `${posX}px`;
+    box.style.top = `${posY}px`;
+  } else {
+    // Default position if no coordinates provided
+    box.style.left = "20px";
+    box.style.top = "20px";
+  }
 }
 
 // Close info box function
 function closeInfoBox() {
-  document.getElementById("infoBox").style.display = "none";
+  const box = document.getElementById("infoBox");
+  box.style.display = "none";
 }
 
 // Search nucleus by Z, N
@@ -211,13 +287,138 @@ function searchNucleus() {
   let z = document.getElementById("zInput").value;
   let n = document.getElementById("nInput").value;
 
-  fetch(`${API_BASE}/api/nuclei/${z}/${n}`)
-    .then(res => {
-      if (!res.ok) throw new Error("Not found");
-      return res.json();
-    })
-    .then(nucleus => showInfo(nucleus))
-    .catch(() => alert("Nucleus not found in dataset"));
+  // Validate inputs
+  if (!z || !n) {
+    showNotFoundDialog("Please enter both Z (proton number) and N (neutron number) values.");
+    return;
+  }
+
+  // Convert to numbers for comparison
+  z = parseInt(z);
+  n = parseInt(n);
+
+  // Show loading state
+  const searchBtn = document.querySelector('.search-btn');
+  const originalText = searchBtn.innerHTML;
+  searchBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" opacity=".5" fill="currentColor"/><path d="M20 12h2A10 10 0 0 0 12 2v2a8 8 0 0 1 8 8z" fill="currentColor"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></path></svg>Searching...';
+  searchBtn.disabled = true;
+
+  console.log(`Searching for nucleus with Z=${z}, N=${n}`);
+  
+  try {
+    // Only search in the already loaded data - no API fallback
+    if (nuclearData && nuclearData.length > 0) {
+      console.log(`Searching in loaded data (${nuclearData.length} nuclei)...`);
+      const nucleus = nuclearData.find(item => parseInt(item.Z) === z && parseInt(item.N) === n);
+      
+      if (nucleus) {
+        console.log('Nucleus found in loaded data:', nucleus);
+        
+        // Make sure the chart tab is active
+        openTab('chart');
+        
+        // Calculate position based on Z and N values
+        // Find where this nucleus would be on the chart
+        const chartArea = document.getElementById("chartArea");
+        const plotlyDiv = chartArea.getElementsByClassName('js-plotly-plot')[0];
+        
+        if (plotlyDiv && plotlyDiv._fullLayout) {
+          const xaxis = plotlyDiv._fullLayout.xaxis;
+          const yaxis = plotlyDiv._fullLayout.yaxis;
+          
+          // Convert Z and N values to pixel positions
+          // These are the exact coordinates of the point in the graph
+          const xPos = xaxis.d2p(n) + xaxis._offset;
+          const yPos = yaxis.d2p(z) + yaxis._offset;
+          
+          // Show the info at the calculated position
+          setTimeout(() => {
+            showInfo(nucleus, xPos, yPos);
+          }, 100);
+        } else {
+          // Fallback if we can't get the plot layout
+          setTimeout(() => {
+            showInfo(nucleus);
+          }, 100);
+        }
+      } else {
+        console.log('Nucleus not found in loaded data');
+        showNotFoundDialog(`No data available for nucleus with Z=${z} and N=${n}. Please verify your input values.`);
+      }
+    } else {
+      showNotFoundDialog("Nuclear data not loaded yet. Please wait and try again.");
+    }
+  } catch (error) {
+    console.error('Search error:', error);
+    showNotFoundDialog(`Error searching for nucleus: ${error.message}`);
+  } finally {
+    // Reset button state
+    searchBtn.innerHTML = originalText;
+    searchBtn.disabled = false;
+  }
+}
+
+// Show Material-UI style information dialog
+function showNotFoundDialog(message) {
+  // Create dialog elements
+  const overlay = document.createElement('div');
+  overlay.className = 'dialog-overlay';
+  
+  const dialog = document.createElement('div');
+  dialog.className = 'not-found-dialog';
+  
+  dialog.innerHTML = `
+    <div class="dialog-header">
+      <span class="material-icons dialog-icon"></span>
+      <h3>Information</h3>
+    </div>
+    <div class="dialog-content">
+      <p>${message}</p>
+    </div>
+    <div class="dialog-actions">
+      <button class="dialog-btn dialog-btn-primary" onclick="closeNotFoundDialog()">
+        <span class="material-icons"></span>
+        OK
+      </button>
+    </div>
+  `;
+  
+  overlay.appendChild(dialog);
+  document.body.appendChild(overlay);
+  
+  console.log("Showing information dialog:", message);
+  
+  // Show with animation
+  setTimeout(() => {
+    overlay.classList.add('active');
+    dialog.classList.add('active');
+  }, 10);
+  
+  // Store reference for closing
+  window.currentInfoDialog = overlay;
+  
+  // Add keyboard event listener for Escape key
+  document.addEventListener('keydown', function escapeHandler(e) {
+    if (e.key === 'Escape') {
+      closeNotFoundDialog();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  });
+}
+
+// Close information dialog
+function closeNotFoundDialog() {
+  const overlay = window.currentInfoDialog;
+  if (overlay) {
+    const dialog = overlay.querySelector('.not-found-dialog');
+    dialog.classList.remove('active');
+    overlay.classList.remove('active');
+    
+    setTimeout(() => {
+      document.body.removeChild(overlay);
+      window.currentInfoDialog = null;
+    }, 200);
+  }
 }
 
 // Tabs
