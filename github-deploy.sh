@@ -6,7 +6,7 @@
 echo "=== DDNP Frontend GitHub Deployment ==="
 
 # Configuration - UPDATE THESE VALUES
-GITHUB_REPO="https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git"
+GITHUB_REPO="https://github.com/nisha-create958/ddnp_frontend.git"
 DOMAIN="ddnp.in"
 WEB_ROOT="/var/www/$DOMAIN"
 
