@@ -1,5 +1,5 @@
 // Backend URL - Check if this is correct!
-const API_BASE = "https://ddnp-backend.onrender.com";
+const API_BASE = "https://api.ddnp.in";
 // Uncomment the line below to test with a local backend instead
 // const API_BASE = "http://localhost:10000";
 console.log("Using API base URL:", API_BASE);
