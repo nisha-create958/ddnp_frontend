@@ -65,16 +65,16 @@ function drawChart() {
     111: 'Rg', 112: 'Cn', 113: 'Nh', 114: 'Fl', 115: 'Mc', 116: 'Lv', 117: 'Ts', 118: 'Og', 119: 'Uue', 120: 'Ubn'
   };
 
-  // Calculate color range for better visualization
+  // Calculate color range for better visualization with more variation in stable region
   let validColors = colors.filter(c => c !== null && !isNaN(c));
   let minColor = Math.min(...validColors);
   let maxColor = Math.max(...validColors);
   
-  // Expand the color range to show more variation (compress the scale)
-  // This will make more nuclei visible in different colors instead of black
+  // Focus more on the negative (stable) region where most data exists
+  // This will show more color variation in the blue region
   let colorRange = maxColor - minColor;
-  let expandedMin = minColor + colorRange * 0.1;  // Start from 10% of range
-  let expandedMax = minColor + colorRange * 0.7;  // End at 70% of range
+  let expandedMin = minColor + colorRange * 0.05;  // Start from 5% of range (more negative)
+  let expandedMax = minColor + colorRange * 0.4;   // End at 40% of range (less positive)
   
   console.log(`Original range: ${minColor.toFixed(2)} to ${maxColor.toFixed(2)}`);
   console.log(`Expanded range: ${expandedMin.toFixed(2)} to ${expandedMax.toFixed(2)}`);
@@ -90,13 +90,15 @@ function drawChart() {
       symbol: "square",
       color: colors,
       colorscale: [
-        [0.0, '#000080'],    // Dark blue for most negative (most stable)
-        [0.2, '#0000FF'],    // Blue
-        [0.4, '#00FFFF'],    // Cyan
-        [0.5, '#00FF00'],    // Green
-        [0.6, '#FFFF00'],    // Yellow
-        [0.8, '#FF8000'],    // Orange
-        [1.0, '#FF0000']     // Red for most positive (least stable)
+        [0.0, '#000080'],    // Dark blue for most stable
+        [0.15, '#0040FF'],   // Blue
+        [0.3, '#0080FF'],    // Light blue
+        [0.45, '#00C0FF'],   // Cyan-blue
+        [0.6, '#00FFFF'],    // Cyan
+        [0.75, '#40FF80'],   // Green-cyan
+        [0.85, '#80FF40'],   // Yellow-green
+        [0.95, '#FFFF00'],   // Yellow
+        [1.0, '#FF8000']     // Orange for less stable
       ],
       cmin: expandedMin,
       cmax: expandedMax,
@@ -192,6 +194,7 @@ function drawChart() {
 // Display details in info box at the clicked point position
 function showInfo(nucleus, x, y) {
   console.log('Showing info for nucleus:', nucleus);
+  console.log('Position coordinates:', x, y);
   
   const box = document.getElementById("infoBox");
   if (!box) {
@@ -237,34 +240,69 @@ function showInfo(nucleus, x, y) {
     </div>
   `;
   
-  // Position the info box directly at the clicked point
+  // Position the info box intelligently to stay within screen bounds
   // If x and y are provided (from click or search), position the box there
   if (x !== undefined && y !== undefined) {
     const chartArea = document.getElementById("chartArea");
     const chartRect = chartArea.getBoundingClientRect();
     
-    // Calculate position, keeping the box within the chart boundaries
-    // Position box so its top-left corner is at the point
+    // Box dimensions (made smaller and more responsive)
+    const boxWidth = Math.min(320, window.innerWidth * 0.9);
+    const boxHeight = Math.min(350, window.innerHeight * 0.8);
+    
+    // Start with the clicked/searched position
     let posX = x;
     let posY = y;
     
-    // Make sure box stays within chart area
-    const boxWidth = 350;
-    const boxHeight = 300;
-    
-    // Adjust if box would go off right edge
-    if (posX + boxWidth > chartRect.width) {
-      posX = posX - boxWidth;
+    // Smart positioning logic:
+    // 1. Try to position box to the right of the point
+    if (posX + boxWidth + 20 <= chartRect.width) {
+      posX = posX + 20; // Small offset from the point
+    } 
+    // 2. If not enough space on right, position to the left
+    else if (posX - boxWidth - 20 >= 0) {
+      posX = posX - boxWidth - 20;
+    }
+    // 3. If neither works, center it horizontally with some margin
+    else {
+      posX = Math.max(10, Math.min(posX, chartRect.width - boxWidth - 10));
     }
     
-    // Adjust if box would go off bottom edge
-    if (posY + boxHeight > chartRect.height) {
-      posY = posY - boxHeight;
+    // Vertical positioning:
+    // 1. Try to position box below the point
+    if (posY + boxHeight + 20 <= chartRect.height) {
+      posY = posY + 20; // Small offset from the point
+    }
+    // 2. If not enough space below, position above
+    else if (posY - boxHeight - 20 >= 0) {
+      posY = posY - boxHeight - 20;
+    }
+    // 3. If neither works, position it in the middle with some margin
+    else {
+      posY = Math.max(10, Math.min(posY, chartRect.height - boxHeight - 10));
     }
     
-    // Ensure box doesn't go off top or left edges
-    posX = Math.max(posX, 0);
-    posY = Math.max(posY, 0);
+    // Final safety check - ensure it's always within viewport bounds
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Get the chart's position relative to viewport
+    const chartOffsetX = chartRect.left;
+    const chartOffsetY = chartRect.top;
+    
+    // Convert chart-relative position to viewport-relative position
+    const viewportX = posX + chartOffsetX;
+    const viewportY = posY + chartOffsetY;
+    
+    // Ensure it stays within viewport
+    const finalViewportX = Math.max(5, Math.min(viewportX, viewportWidth - boxWidth - 5));
+    const finalViewportY = Math.max(5, Math.min(viewportY, viewportHeight - boxHeight - 5));
+    
+    // Convert back to chart-relative coordinates
+    posX = finalViewportX - chartOffsetX;
+    posY = finalViewportY - chartOffsetY;
+    
+    console.log(`Positioning info box at: x=${posX}, y=${posY} (chart area: ${chartRect.width}x${chartRect.height})`);
     
     // Apply the position
     box.style.left = `${posX}px`;
@@ -317,28 +355,55 @@ function searchNucleus() {
         // Make sure the chart tab is active
         openTab('chart');
         
-        // Calculate position based on Z and N values
-        // Find where this nucleus would be on the chart
-        const chartArea = document.getElementById("chartArea");
-        const plotlyDiv = chartArea.getElementsByClassName('js-plotly-plot')[0];
+        // Find the data point index for this Z,N combination
+        const dataIndex = nuclearData.findIndex(item => 
+          parseInt(item.Z) === z && parseInt(item.N) === n
+        );
         
-        if (plotlyDiv && plotlyDiv._fullLayout) {
-          const xaxis = plotlyDiv._fullLayout.xaxis;
-          const yaxis = plotlyDiv._fullLayout.yaxis;
+        if (dataIndex !== -1) {
+          console.log(`Found data index: ${dataIndex} for Z=${z}, N=${n}`);
           
-          // Convert Z and N values to pixel positions
-          // These are the exact coordinates of the point in the graph
-          const xPos = xaxis.d2p(n) + xaxis._offset;
-          const yPos = yaxis.d2p(z) + yaxis._offset;
-          
-          // Show the info at the calculated position
           setTimeout(() => {
+            // Simple approach: calculate position based on chart area and data ranges
+            const chartArea = document.getElementById("chartArea");
+            const chartRect = chartArea.getBoundingClientRect();
+            
+            // Get the data ranges from our nuclear data
+            const allZ = nuclearData.map(d => parseInt(d.Z));
+            const allN = nuclearData.map(d => parseInt(d.N));
+            const minZ = Math.min(...allZ);
+            const maxZ = Math.max(...allZ);
+            const minN = Math.min(...allN);
+            const maxN = Math.max(...allN);
+            
+            console.log(`Data ranges: Z(${minZ}-${maxZ}), N(${minN}-${maxN})`);
+            
+            // Calculate approximate position based on chart dimensions
+            // Assuming some margins for the plot area
+            const plotMarginLeft = 60;  // Left margin for Y-axis
+            const plotMarginBottom = 60; // Bottom margin for X-axis
+            const plotMarginTop = 30;   // Top margin
+            const plotMarginRight = 100; // Right margin for colorbar
+            
+            const plotWidth = chartRect.width - plotMarginLeft - plotMarginRight;
+            const plotHeight = chartRect.height - plotMarginTop - plotMarginBottom;
+            
+            // Calculate relative position (0-1) within the data range
+            const xRelative = (n - minN) / (maxN - minN);
+            const yRelative = 1 - (z - minZ) / (maxZ - minZ); // Invert Y because screen coordinates
+            
+            // Convert to pixel coordinates
+            const xPos = plotMarginLeft + (xRelative * plotWidth);
+            const yPos = plotMarginTop + (yRelative * plotHeight);
+            
+            console.log(`Calculated position for Z=${z}, N=${n}: x=${xPos}, y=${yPos}`);
+            
+            // Show the info at the calculated position
             showInfo(nucleus, xPos, yPos);
-          }, 100);
+          }, 300);
         } else {
-          setTimeout(() => {
-            showInfo(nucleus);
-          }, 100);
+          console.error('Data index not found for nucleus');
+          showInfo(nucleus);
         }
       } else {
         console.log('Nucleus not found in loaded data');
