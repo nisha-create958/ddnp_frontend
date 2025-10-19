@@ -535,9 +535,13 @@ function navigateTo(section) {
   // Add a small delay to let the panel close animation complete
   setTimeout(() => {
     switch(section) {
-      case 'dashboard':
-        // Redirect to index.html (dashboard/home page)
+      case 'home':
+        // Redirect to home page (index.html)
         window.location.href = 'index.html';
+        break;
+      case 'dashboard':
+        // Stay on dashboard page or redirect to it
+        window.location.href = 'dashboard.html';
         break;
       case 'blogs':
         // Redirect to blogs page

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuclear Data Dashboard - DDNP | Interactive Nuclear Physics Visualization</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Interactive nuclear physics dashboard with comprehensive nuclear data visualization. Explore mass excess, binding energies, and nuclear properties with advanced search and analysis tools.">
+  <meta name="keywords" content="nuclear dashboard, nuclear data visualization, mass excess chart, nuclear physics tools, isotope search, nuclear structure analysis">
+  <meta name="author" content="DDNP Research Team">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Nuclear Data Dashboard - DDNP">
+  <meta property="og:description" content="Interactive nuclear physics dashboard with comprehensive data visualization and analysis tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ddnp.in/dashboard.html">
+  <meta property="og:image" content="https://ddnp.in/static/images/logo.jpeg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ddnp.in/dashboard.html">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="./static/images/logo.jpeg">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Hamburger Menu Button -->
+  <button class="hamburger-menu" onclick="toggleSidePanel()" aria-label="Open navigation menu">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+
+  <!-- Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <div class="side-panel-header">
+      <div class="logo-section">
+        <img src="./static/images/logo.jpeg" alt="DDNP Logo" class="logo-img" onerror="this.style.display='none'">
+        <span class="logo-text">DDNP</span>
+      </div>
+      <button class="close-btn" onclick="toggleSidePanel()" aria-label="Close navigation menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="side-nav">
+      <a href="#" class="nav-item" onclick="navigateTo('home')">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Home</span>
+        <svg class="redirect-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#" class="nav-item" onclick="navigateTo('dashboard')">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Dashboard</span>
+        <svg class="redirect-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#" class="nav-item" onclick="navigateTo('blogs')">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Blogs</span>
+        <svg class="redirect-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#" class="nav-item" onclick="navigateTo('research')">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 14s1.5-1 2-1 2 1 2 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="15" y1="8" x2="17" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="15" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Research Papers</span>
+        <svg class="redirect-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Overlay for mobile -->
+  <div id="sidePanel-overlay" class="side-panel-overlay" onclick="toggleSidePanel()"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-content">
+      <!-- Logo box right after hamburger -->
+      <div class="logo-box">
+        <img src="./static/images/image.png" alt="DDNP Logo" class="header-logo" onerror="this.style.display='none'">
+      </div>
+      <div class="header-center">
+        <h1 class="app-name">Data Driven Nuclear Prediction</h1>
+      </div>
+      <div class="header-right">
+        <!-- Empty space for balance -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls and Navigation -->
+  <div class="controls-section">
+    <div class="controls-container">
+      <div class="tab-navigation">
+        <button class="tab-btn active" onclick="openTab('chart')">Mass-excess</button>
+        <button class="tab-btn" onclick="openTab('halflife')">Half-life</button>
+        <button class="tab-btn" onclick="openTab('qalpha')">Qα</button>
+        <button class="tab-btn" onclick="openTab('sn')">Sn</button>
+        <button class="tab-btn" onclick="openTab('sp')">Sp</button>
+        <button class="tab-btn" onclick="openTab('s2n')">S2n</button>
+        <button class="tab-btn" onclick="openTab('s2p')">S2p</button>
+      </div>
+      <div class="search-controls">
+        <div class="input-group">
+          <input type="number" id="zInput" placeholder="Z" class="search-input">
+          <input type="number" id="nInput" placeholder="N" class="search-input">
+          <button onclick="searchNucleus()" class="search-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+              <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div id="chart" class="tab-content">
+    <div id="chartArea"></div>
+    <div id="infoBox"></div>
+  </div>
+
+  <div id="halflife" class="tab-content hidden">
+    <p>Half-life data will be updated soon.</p>
+  </div>
+
+  <div id="qalpha" class="tab-content hidden">
+    <p>Qα data will be updated soon.</p>
+  </div>
+
+  <div id="sn" class="tab-content hidden">
+    <p>Sn data will be updated soon.</p>
+  </div>
+
+  <div id="sp" class="tab-content hidden">
+    <p>Sp data will be updated soon.</p>
+  </div>
+
+  <div id="s2n" class="tab-content hidden">
+    <p>S2n data will be updated soon.</p>
+  </div>
+
+  <div id="s2p" class="tab-content hidden">
+    <p>S2p data will be updated soon.</p>
+  </div>
+
+  <!-- No overlay needed for the info box -->
+
+  <script src="app.js"></script>
+</body>
+</html>

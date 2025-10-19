@@ -2,11 +2,674 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Data Driven Nuclear Prediction</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DDNP - Data Driven Nuclear Prediction | Advanced Nuclear Physics Research Platform</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="DDNP (Data Driven Nuclear Prediction) is an advanced research platform implementing the groundbreaking ELMA methodology from our arXiv:2508.21771 publication. Achieve 65 keV precision in nuclear mass predictions with interactive visualization and scientific tools.">
+  <meta name="keywords" content="nuclear physics, nuclear data, mass excess, nuclear prediction, nuclear structure, isotopes, nuclear research, physics visualization, scientific data, nuclear chart">
+  <meta name="author" content="DDNP Research Team">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="DDNP - Data Driven Nuclear Prediction">
+  <meta property="og:description" content="Advanced nuclear physics research platform with interactive data visualization and predictive modeling tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ddnp.in">
+  <meta property="og:image" content="https://ddnp.in/static/images/logo.jpeg">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DDNP - Data Driven Nuclear Prediction">
+  <meta name="twitter:description" content="Advanced nuclear physics research platform with interactive data visualization and predictive modeling tools.">
+  <meta name="twitter:image" content="https://ddnp.in/static/images/logo.jpeg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ddnp.in">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="./static/images/logo.jpeg">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "DDNP - Data Driven Nuclear Prediction",
+    "description": "Advanced nuclear physics research platform with interactive data visualization and predictive modeling tools",
+    "url": "https://ddnp.in",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://ddnp.in/dashboard.html?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Home Page Specific Styles */
+    .home-page {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+      color: white;
+      padding: 120px 0 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 32px;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-description {
+      font-size: 1.1rem;
+      margin-bottom: 48px;
+      opacity: 0.8;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    .cta-btn-primary {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+    }
+    
+    .cta-btn-primary:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    .cta-btn-secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid white;
+    }
+    
+    .cta-btn-secondary:hover {
+      background: #f8f9ff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    .features-section {
+      padding: 100px 0;
+      background: #f8f9fa;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #2d3748;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #718096;
+      margin-bottom: 64px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 40px 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: white;
+      font-size: 28px;
+    }
+    
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #2d3748;
+    }
+    
+    .feature-description {
+      color: #718096;
+      line-height: 1.7;
+    }
+    
+    .stats-section {
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+      color: white;
+      padding: 80px 0;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 48px;
+      text-align: center;
+    }
+    
+    .stat-item {
+      padding: 24px;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #81e6d9 0%, #68d391 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+    
+    .about-section {
+      padding: 100px 0;
+      background: white;
+    }
+    
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    
+    .about-text h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #2d3748;
+    }
+    
+    .about-text p {
+      font-size: 1.1rem;
+      color: #718096;
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+    
+    .about-features {
+      list-style: none;
+      padding: 0;
+      margin: 32px 0;
+    }
+    
+    .about-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+      color: #4a5568;
+    }
+    
+    .about-features .material-icons {
+      color: #48bb78;
+      font-size: 20px;
+    }
+    
+    .about-visual {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .about-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .about-visual-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .about-visual h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    
+    .about-visual p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .research-section {
+      padding: 100px 0;
+      background: #f8f9fa;
+    }
+    
+    .research-paper-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .research-paper-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .paper-content {
+      padding: 40px;
+    }
+    
+    .paper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .paper-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .paper-badge .material-icons {
+      font-size: 18px;
+    }
+    
+    .paper-date {
+      color: #718096;
+      font-weight: 500;
+    }
+    
+    .paper-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    
+    .paper-authors {
+      color: #4a5568;
+      margin-bottom: 24px;
+      font-size: 1rem;
+    }
+    
+    .paper-abstract {
+      margin-bottom: 32px;
+    }
+    
+    .paper-abstract h4 {
+      color: #2d3748;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .paper-abstract p {
+      color: #4a5568;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    
+    .paper-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+      padding: 24px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .highlight-item .material-icons {
+      color: #1e1e2f;
+      font-size: 24px;
+      margin-top: 2px;
+    }
+    
+    .highlight-item strong {
+      color: #2d3748;
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .highlight-item p {
+      color: #718096;
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.4;
+    }
+    
+    .paper-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 32px;
+    }
+    
+    .paper-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      min-width: 160px;
+      justify-content: center;
+    }
+    
+    .paper-btn-primary {
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(30, 30, 47, 0.3);
+    }
+    
+    .paper-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(30, 30, 47, 0.4);
+      background: linear-gradient(135deg, #2a2a3e 0%, #1e1e2f 100%);
+    }
+    
+    .paper-btn-secondary {
+      background: white;
+      color: #1e1e2f;
+      border-color: #1e1e2f;
+    }
+    
+    .paper-btn-secondary:hover {
+      background: #1e1e2f;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(30, 30, 47, 0.3);
+    }
+    
+    .paper-btn-accent {
+      background: linear-gradient(135deg, #0077cc 0%, #005fa3 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 119, 204, 0.3);
+    }
+    
+    .paper-btn-accent:hover {
+      background: linear-gradient(135deg, #005fa3 0%, #0077cc 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 119, 204, 0.4);
+    }
+    
+    .footer {
+      background: #1a202c;
+      color: white;
+      padding: 60px 0 30px 0;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    
+    .footer-brand h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #81e6d9;
+    }
+    
+    .footer-brand p {
+      color: #a0aec0;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    
+    .footer-section h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #e2e8f0;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-section li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-section a {
+      color: #a0aec0;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-section a:hover {
+      color: #81e6d9;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid #2d3748;
+      padding-top: 24px;
+      text-align: center;
+      color: #a0aec0;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+      
+      .paper-content {
+        padding: 24px;
+      }
+      
+      .paper-title {
+        font-size: 1.5rem;
+      }
+      
+      .paper-highlights {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+      }
+      
+      .paper-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .paper-btn {
+        justify-content: center;
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-section {
+        padding: 80px 0 60px 0;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="home-page">
   <!-- Hamburger Menu Button -->
   <button class="hamburger-menu" onclick="toggleSidePanel()" aria-label="Open navigation menu">
     <span class="hamburger-line"></span>
@@ -28,6 +691,16 @@
       </button>
     </div>
     <nav class="side-nav">
+      <a href="#" class="nav-item" onclick="navigateTo('home')">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Home</span>
+        <svg class="redirect-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
       <a href="#" class="nav-item" onclick="navigateTo('dashboard')">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -73,82 +746,410 @@
   <!-- Overlay for mobile -->
   <div id="sidePanel-overlay" class="side-panel-overlay" onclick="toggleSidePanel()"></div>
 
-  <!-- Header -->
-  <header class="app-header">
-    <div class="header-content">
-      <!-- Logo box right after hamburger -->
-      <div class="logo-box">
-        <img src="./static/images/image.png" alt="DDNP Logo" class="header-logo" onerror="this.style.display='none'">
-      </div>
-      <div class="header-center">
-        <h1 class="app-name">Data Driven Nuclear Prediction</h1>
-      </div>
-      <div class="header-right">
-        <!-- Empty space for balance -->
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Data Driven Nuclear Prediction</h1>
+      <p class="hero-subtitle">Advanced Nuclear Physics Research Platform</p>
+      <p class="hero-description">
+        Explore comprehensive nuclear data with interactive visualizations, predictive modeling, 
+        and cutting-edge research tools. Our platform implements the groundbreaking ELMA methodology 
+        from our recent arXiv publication, achieving unprecedented 65 keV precision in nuclear mass predictions.
+      </p>
+      <div class="cta-buttons">
+        <a href="dashboard.html" class="cta-btn cta-btn-primary">
+          <span class="material-icons">dashboard</span>
+          Explore Dashboard
+        </a>
+        <a href="#features" class="cta-btn cta-btn-secondary">
+          <span class="material-icons">info</span>
+          Learn More
+        </a>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- Controls and Navigation -->
-  <div class="controls-section">
-    <div class="controls-container">
-      <div class="tab-navigation">
-        <button class="tab-btn active" onclick="openTab('chart')">Mass-excess</button>
-        <button class="tab-btn" onclick="openTab('halflife')">Half-life</button>
-        <button class="tab-btn" onclick="openTab('qalpha')">Qα</button>
-        <button class="tab-btn" onclick="openTab('sn')">Sn</button>
-        <button class="tab-btn" onclick="openTab('sp')">Sp</button>
-        <button class="tab-btn" onclick="openTab('s2n')">S2n</button>
-        <button class="tab-btn" onclick="openTab('s2p')">S2p</button>
-      </div>
-      <div class="search-controls">
-        <div class="input-group">
-          <input type="number" id="zInput" placeholder="Z" class="search-input">
-          <input type="number" id="nInput" placeholder="N" class="search-input">
-          <button onclick="searchNucleus()" class="search-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-              <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            Search
-          </button>
+  <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2 class="section-title">Powerful Research Tools</h2>
+      <p class="section-subtitle">
+        Comprehensive nuclear physics platform with advanced visualization and analysis capabilities
+      </p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <span class="material-icons">scatter_plot</span>
+          </div>
+          <h3 class="feature-title">Interactive Nuclear Chart</h3>
+          <p class="feature-description">
+            Visualize nuclear data with our interactive chart of nuclides. Explore mass excess, 
+            binding energies, and nuclear properties with intuitive color-coded visualizations 
+            and detailed hover information.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <span class="material-icons">analytics</span>
+          </div>
+          <h3 class="feature-title">Predictive Modeling</h3>
+          <p class="feature-description">
+            Advanced ELMA (Extended Liquid drop Model with Astrophysical corrections) predictions 
+            for nuclear masses and properties. Compare experimental data with theoretical predictions 
+            for comprehensive analysis.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <span class="material-icons">search</span>
+          </div>
+          <h3 class="feature-title">Smart Search & Analysis</h3>
+          <p class="feature-description">
+            Quickly find specific isotopes by proton and neutron numbers. Get detailed nuclear 
+            properties including mass excess, binding energies, and separation energies with 
+            instant search capabilities.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <span class="material-icons">science</span>
+          </div>
+          <h3 class="feature-title">Research-Grade Data</h3>
+          <p class="feature-description">
+            Access high-quality nuclear data from established databases. Our platform provides 
+            both experimental measurements and theoretical predictions for comprehensive nuclear 
+            structure research.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <span class="material-icons">speed</span>
+          </div>
+          <h3 class="feature-title">Real-time Visualization</h3>
+          <p class="feature-description">
+            Experience smooth, real-time data visualization with our optimized plotting engine. 
+            Navigate through thousands of nuclear data points with responsive interactions and 
+            detailed information displays.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <span class="material-icons">school</span>
+          </div>
+          <h3 class="feature-title">Educational Resources</h3>
+          <p class="feature-description">
+            Perfect for students, researchers, and educators. Our platform provides intuitive 
+            tools for learning nuclear physics concepts and conducting advanced research with 
+            comprehensive documentation.
+          </p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Tabs -->
-  <div id="chart" class="tab-content">
-    <div id="chartArea"></div>
-    <div id="infoBox"></div>
-  </div>
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">6,300+</div>
+          <div class="stat-label">Nuclear Isotopes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">118</div>
+          <div class="stat-label">Chemical Elements</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Data Properties</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Open Access</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div id="halflife" class="tab-content hidden">
-    <p>Half-life data will be updated soon.</p>
-  </div>
+  <!-- Research Publication Section -->
+  <section class="research-section">
+    <div class="container">
+      <h2 class="section-title">Latest Research Publication</h2>
+      <p class="section-subtitle">
+        Our cutting-edge research in ensemble learning for nuclear mass predictions
+      </p>
+      
+      <div class="research-paper-card">
+        <div class="paper-content">
+          <div class="paper-header">
+            <div class="paper-badge">
+              <span class="material-icons">article</span>
+              arXiv:2508.21771
+            </div>
+            <div class="paper-date">Published: August 29, 2025</div>
+          </div>
+          
+          <h3 class="paper-title">
+            Conflation of Ensemble-Learned Nuclear Mass Models for Enhanced Precision
+          </h3>
+          
+          <div class="paper-authors">
+            <strong>Authors:</strong> Srikrishna Agrawal, N. Chandnani, T. Ghosh, G. Saxena, B. K. Agrawal, N. Paar
+          </div>
+          
+          <div class="paper-abstract">
+            <h4>Abstract</h4>
+            <p>
+              Ensemble learning algorithms, the gradient boosting and bagging regressors, are employed to correct 
+              the residuals of nuclear mass excess for a diverse set of six nuclear mass models. The weighted 
+              average of these corrected residuals reduces due to their partial cancellation, yielding a significant 
+              improvement in nuclear mass predictions. Our conflated model, which integrates ensemble learning and 
+              model averaging (ELMA), achieves a root mean square error of approximately <strong>65 keV</strong>, well below 
+              the critical threshold of 100 keV, for the complete data set of Atomic Mass Evaluation (AME2020).
+            </p>
+          </div>
+          
+          <div class="paper-highlights">
+            <div class="highlight-item">
+              <span class="material-icons">precision_manufacturing</span>
+              <div>
+                <strong>65 keV Precision</strong>
+                <p>Achieved unprecedented accuracy in nuclear mass predictions</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <span class="material-icons">dataset</span>
+              <div>
+                <strong>6,300 Nuclei</strong>
+                <p>Comprehensive database covering the entire nuclear landscape</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <span class="material-icons">psychology</span>
+              <div>
+                <strong>ELMA Method</strong>
+                <p>Novel ensemble learning approach for enhanced predictions</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="paper-actions">
+            <a href="https://arxiv.org/abs/2508.21771" target="_blank" rel="noopener noreferrer" class="paper-btn paper-btn-primary">
+              <span class="material-icons">open_in_new</span>
+              View on arXiv
+            </a>
+            <a href="https://arxiv.org/pdf/2508.21771.pdf" target="_blank" rel="noopener noreferrer" class="paper-btn paper-btn-secondary">
+              <span class="material-icons">picture_as_pdf</span>
+              Download PDF
+            </a>
+            <a href="dashboard.html" class="paper-btn paper-btn-accent">
+              <span class="material-icons">dashboard</span>
+              Explore ELMA Data
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div id="qalpha" class="tab-content hidden">
-    <p>Qα data will be updated soon.</p>
-  </div>
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Advanced Nuclear Physics Research</h2>
+          <p>
+            DDNP (Data Driven Nuclear Prediction) represents the cutting edge of nuclear physics 
+            research platforms. Our system implements the groundbreaking <strong>ELMA (Ensemble Learning 
+            and Model Averaging)</strong> methodology, as detailed in our recent publication, to provide 
+            researchers with unprecedented accuracy in nuclear mass predictions.
+          </p>
+          <p>
+            Built for the scientific community, our platform offers intuitive visualization 
+            tools, powerful search capabilities, and research-grade data quality that meets 
+            the demands of modern nuclear physics research. The platform directly implements 
+            the algorithms described in our peer-reviewed research.
+          </p>
+          
+          <ul class="about-features">
+            <li>
+              <span class="material-icons">check_circle</span>
+              Comprehensive nuclear database with 6,300+ isotopes
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              ELMA theoretical predictions with 65 keV precision
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              Interactive visualization with real-time data exploration
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              Research-grade accuracy and peer-reviewed methodology
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              Open access platform for global research community
+            </li>
+          </ul>
+        </div>
+        
+        <div class="about-visual">
+          <div class="about-visual-content">
+            <h3>Nuclear Data Excellence</h3>
+            <p>
+              Combining experimental precision with theoretical insights to advance 
+              nuclear physics research and education worldwide.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div id="sn" class="tab-content hidden">
-    <p>Sn data will be updated soon.</p>
-  </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>DDNP</h3>
+          <p>
+            Data Driven Nuclear Prediction platform provides advanced tools for nuclear physics 
+            research, combining experimental data with theoretical predictions for comprehensive 
+            nuclear structure analysis.
+          </p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="blogs.html">Research Blog</a></li>
+            <li><a href="research-papers.html">Publications</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Research</h4>
+          <ul>
+            <li><a href="https://arxiv.org/abs/2508.21771" target="_blank" rel="noopener noreferrer">arXiv Paper</a></li>
+            <li><a href="https://arxiv.org/pdf/2508.21771.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a></li>
+            <li><a href="dashboard.html">ELMA Data</a></li>
+          </ul>
+        </div>
+        
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 DDNP - Data Driven Nuclear Prediction. All rights reserved. | Built for the global nuclear physics research community.</p>
+      </div>
+    </div>
+  </footer>
 
-  <div id="sp" class="tab-content hidden">
-    <p>Sp data will be updated soon.</p>
-  </div>
+  <script>
+    // Side Panel Functions (reused from dashboard)
+    function toggleSidePanel() {
+      const sidePanel = document.getElementById('sidePanel');
+      const overlay = document.getElementById('sidePanel-overlay');
+      const body = document.body;
+      
+      const isOpen = sidePanel.classList.contains('open');
+      
+      if (isOpen) {
+        // Close panel
+        sidePanel.classList.remove('open');
+        overlay.classList.remove('active');
+        body.classList.remove('side-panel-open');
+      } else {
+        // Open panel
+        sidePanel.classList.add('open');
+        overlay.classList.add('active');
+        body.classList.add('side-panel-open');
+      }
+    }
 
-  <div id="s2n" class="tab-content hidden">
-    <p>S2n data will be updated soon.</p>
-  </div>
+    // Navigation functions
+    function navigateTo(section) {
+      // Close the side panel first
+      toggleSidePanel();
+      
+      // Add a small delay to let the panel close animation complete
+      setTimeout(() => {
+        switch(section) {
+          case 'home':
+            // Stay on current page (index.html)
+            window.location.href = 'index.html';
+            break;
+          case 'dashboard':
+            // Redirect to dashboard page
+            window.location.href = 'dashboard.html';
+            break;
+          case 'blogs':
+            // Redirect to blogs page
+            window.location.href = 'blogs.html';
+            break;
+          case 'research':
+            // Redirect to research papers page
+            window.location.href = 'research-papers.html';
+            break;
+          default:
+            console.log('Unknown navigation target:', section);
+        }
+      }, 300);
+    }
 
-  <div id="s2p" class="tab-content hidden">
-    <p>S2p data will be updated soon.</p>
-  </div>
+    // Close side panel when clicking outside (on overlay)
+    document.addEventListener('click', function(event) {
+      const sidePanel = document.getElementById('sidePanel');
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      
+      // If side panel is open and click is outside panel and not on hamburger menu
+      if (sidePanel.classList.contains('open') && 
+          !sidePanel.contains(event.target) && 
+          !hamburgerMenu.contains(event.target)) {
+        toggleSidePanel();
+      }
+    });
 
-  <!-- No overlay needed for the info box -->
+    // Close side panel on escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const sidePanel = document.getElementById('sidePanel');
+        if (sidePanel.classList.contains('open')) {
+          toggleSidePanel();
+        }
+      }
+    });
 
-  <script src="app.js"></script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add loading animation for CTA buttons
+    document.querySelectorAll('.cta-btn-primary').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        if (this.href.includes('dashboard.html')) {
+          this.innerHTML = '<span class="material-icons">hourglass_empty</span>Loading Dashboard...';
+        }
+      });
+    });
+  </script>
 </body>
 </html>

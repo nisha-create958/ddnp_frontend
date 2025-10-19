@@ -3,48 +3,319 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Research Papers - Data Driven Nuclear Prediction</title>
+  <title>Research Papers - DDNP | Nuclear Physics Publications and Studies</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Access cutting-edge nuclear physics research papers, publications, and scientific studies from the DDNP platform. Coming soon - comprehensive research repository and academic resources.">
+  <meta name="keywords" content="nuclear physics papers, nuclear research publications, DDNP research, nuclear structure studies, academic papers, scientific publications">
+  <meta name="author" content="DDNP Research Team">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Research Papers - DDNP">
+  <meta property="og:description" content="Nuclear physics research papers and publications from the DDNP research team.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ddnp.in/research-papers.html">
+  <meta property="og:image" content="https://ddnp.in/static/images/logo.jpeg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ddnp.in/research-papers.html">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="./static/images/logo.jpeg">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
   <style>
-    .coming-soon-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .research-papers-container {
       min-height: 80vh;
+    }
+    
+    .research-header {
       text-align: center;
-      padding: 40px 20px;
+      margin-bottom: 60px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 40px 24px 0 24px;
     }
     
-    .coming-soon-icon {
-      font-size: 80px;
-      margin-bottom: 30px;
-      color: #0077cc;
-    }
-    
-    .coming-soon-title {
+    .research-title {
       font-size: 48px;
       font-weight: 700;
       color: #1e1e2f;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     
-    .coming-soon-subtitle {
-      font-size: 24px;
+    .research-subtitle {
+      font-size: 20px;
       color: #666;
-      margin-bottom: 30px;
+      max-width: 600px;
+      margin: 0 auto;
     }
     
-    .coming-soon-message {
-      font-size: 18px;
-      color: #888;
+    .featured-paper {
+      margin-bottom: 80px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .research-section {
+      padding: 100px 0;
+      background: #f8f9fa;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #2d3748;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #718096;
+      margin-bottom: 64px;
       max-width: 600px;
-      line-height: 1.6;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .research-paper-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .research-paper-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .paper-content {
+      padding: 40px;
+    }
+    
+    .paper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .paper-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .paper-badge .material-icons {
+      font-size: 18px;
+    }
+    
+    .paper-date {
+      color: #718096;
+      font-weight: 500;
+    }
+    
+    .paper-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    
+    .paper-authors {
+      color: #4a5568;
+      margin-bottom: 24px;
+      font-size: 1rem;
+    }
+    
+    .paper-abstract {
+      margin-bottom: 32px;
+    }
+    
+    .paper-abstract h4 {
+      color: #2d3748;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .paper-abstract p {
+      color: #4a5568;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    
+    .paper-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+      padding: 24px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .highlight-item .material-icons {
+      color: #1e1e2f;
+      font-size: 24px;
+      margin-top: 2px;
+    }
+    
+    .highlight-item strong {
+      color: #2d3748;
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .highlight-item p {
+      color: #718096;
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.4;
+    }
+    
+    .paper-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 32px;
+    }
+    
+    .paper-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      min-width: 160px;
+      justify-content: center;
+    }
+    
+    .paper-btn-primary {
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(30, 30, 47, 0.3);
+    }
+    
+    .paper-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(30, 30, 47, 0.4);
+      background: linear-gradient(135deg, #2a2a3e 0%, #1e1e2f 100%);
+    }
+    
+    .paper-btn-secondary {
+      background: white;
+      color: #1e1e2f;
+      border-color: #1e1e2f;
+    }
+    
+    .paper-btn-secondary:hover {
+      background: #1e1e2f;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(30, 30, 47, 0.3);
+    }
+    
+    .paper-btn-accent {
+      background: linear-gradient(135deg, #0077cc 0%, #005fa3 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 119, 204, 0.3);
+    }
+    
+    .paper-btn-accent:hover {
+      background: linear-gradient(135deg, #005fa3 0%, #0077cc 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 119, 204, 0.4);
+    }
+    
+    .additional-papers {
+      margin-bottom: 60px;
+    }
+    
+    .section-title-papers {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2d3748;
+      text-align: center;
       margin-bottom: 40px;
     }
     
-    .back-btn {
-      padding: 12px 24px;
+    .papers-coming-soon {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 48px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .coming-soon-icon-small {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    
+    .papers-coming-soon h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 16px;
+    }
+    
+    .papers-coming-soon p {
+      color: #4a5568;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .back-to-home {
+      text-align: center;
+    }
+    
+    .back-btn-large {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
       background: #0077cc;
       color: white;
       border: none;
@@ -52,15 +323,81 @@
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
-      display: inline-block;
     }
     
-    .back-btn:hover {
+    .back-btn-large:hover {
       background: #005fa3;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0, 119, 204, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 119, 204, 0.3);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .research-title {
+        font-size: 36px;
+      }
+      
+      .research-subtitle {
+        font-size: 18px;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .section-subtitle {
+        font-size: 1rem;
+      }
+      
+      .paper-content {
+        padding: 24px;
+      }
+      
+      .paper-title {
+        font-size: 1.5rem;
+      }
+      
+      .paper-highlights {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+      }
+      
+      .paper-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .paper-btn {
+        justify-content: center;
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .papers-coming-soon {
+        padding: 32px 24px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .research-title {
+        font-size: 28px;
+      }
+      
+      .paper-title-large {
+        font-size: 1.5rem;
+      }
+      
+      .paper-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-item-paper {
+        justify-content: center;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -86,6 +423,16 @@
       </button>
     </div>
     <nav class="side-nav">
+      <a href="#" class="nav-item" onclick="navigateTo('home')">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Home</span>
+        <svg class="redirect-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
       <a href="#" class="nav-item" onclick="navigateTo('dashboard')">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -147,15 +494,115 @@
     </div>
   </header>
 
-  <!-- Coming Soon Content -->
-  <div class="coming-soon-container">
-    <div class="coming-soon-icon">📚</div>
-    <h1 class="coming-soon-title">Stay Tuned!</h1>
-    <h2 class="coming-soon-subtitle">Research Papers Coming Soon</h2>
-    <p class="coming-soon-message">
-      We're preparing a comprehensive collection of cutting-edge research papers on nuclear physics, machine learning applications, and data-driven predictions. Thank you for visiting and stay tuned for groundbreaking scientific content!
-    </p>
-    <a href="index.html" class="back-btn">← Back to Dashboard</a>
+  <!-- Research Papers Content -->
+  <div class="research-papers-container">
+    <div class="research-header">
+      <h1 class="research-title">Research Publications</h1>
+      <p class="research-subtitle">
+        Peer-reviewed research and scientific contributions from the DDNP team
+      </p>
+    </div>
+    
+    <!-- Featured Publication -->
+    <section class="research-section">
+      <div class="container">
+        <h2 class="section-title">Latest Research Publication</h2>
+        <p class="section-subtitle">
+          Our cutting-edge research in ensemble learning for nuclear mass predictions
+        </p>
+        
+        <div class="research-paper-card">
+          <div class="paper-content">
+            <div class="paper-header">
+              <div class="paper-badge">
+                <span class="material-icons">article</span>
+                arXiv:2508.21771
+              </div>
+              <div class="paper-date">Published: August 29, 2025</div>
+            </div>
+            
+            <h3 class="paper-title">
+              Conflation of Ensemble-Learned Nuclear Mass Models for Enhanced Precision
+            </h3>
+            
+            <div class="paper-authors">
+              <strong>Authors:</strong> Srikrishna Agrawal, N. Chandnani, T. Ghosh, G. Saxena, B. K. Agrawal, N. Paar
+            </div>
+            
+            <div class="paper-abstract">
+              <h4>Abstract</h4>
+              <p>
+                Ensemble learning algorithms, the gradient boosting and bagging regressors, are employed to correct 
+                the residuals of nuclear mass excess for a diverse set of six nuclear mass models. The weighted 
+                average of these corrected residuals reduces due to their partial cancellation, yielding a significant 
+                improvement in nuclear mass predictions. Our conflated model, which integrates ensemble learning and 
+                model averaging (ELMA), achieves a root mean square error of approximately <strong>65 keV</strong>, well below 
+                the critical threshold of 100 keV, for the complete data set of Atomic Mass Evaluation (AME2020).
+              </p>
+            </div>
+            
+            <div class="paper-highlights">
+              <div class="highlight-item">
+                <span class="material-icons">precision_manufacturing</span>
+                <div>
+                  <strong>65 keV Precision</strong>
+                  <p>Achieved unprecedented accuracy in nuclear mass predictions</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <span class="material-icons">dataset</span>
+                <div>
+                  <strong>6,300 Nuclei</strong>
+                  <p>Comprehensive database covering the entire nuclear landscape</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <span class="material-icons">psychology</span>
+                <div>
+                  <strong>ELMA Method</strong>
+                  <p>Novel ensemble learning approach for enhanced predictions</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="paper-actions">
+              <a href="https://arxiv.org/abs/2508.21771" target="_blank" rel="noopener noreferrer" class="paper-btn paper-btn-primary">
+                <span class="material-icons">open_in_new</span>
+                View on arXiv
+              </a>
+              <a href="https://arxiv.org/pdf/2508.21771.pdf" target="_blank" rel="noopener noreferrer" class="paper-btn paper-btn-secondary">
+                <span class="material-icons">picture_as_pdf</span>
+                Download PDF
+              </a>
+              <a href="dashboard.html" class="paper-btn paper-btn-accent">
+                <span class="material-icons">dashboard</span>
+                Explore ELMA Data
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Additional Papers Section -->
+    <div class="additional-papers">
+      <h2 class="section-title-papers">Additional Research</h2>
+      <div class="papers-coming-soon">
+        <div class="coming-soon-icon-small">📝</div>
+        <h3>More Publications Coming Soon</h3>
+        <p>
+          We're continuously working on cutting-edge research in nuclear physics, machine learning applications, 
+          and data-driven predictions. Stay tuned for more peer-reviewed publications and scientific contributions.
+        </p>
+      </div>
+    </div>
+    
+    <div class="back-to-home">
+        <a href="index.html" class="back-btn-large">
+          <span class="material-icons">home</span>
+          Back to Home
+        </a>
+    </div>
   </div>
 
   <script src="app.js"></script>
