@@ -536,20 +536,20 @@ function navigateTo(section) {
   setTimeout(() => {
     switch(section) {
       case 'home':
-        // Redirect to home page (index.html)
-        window.location.href = 'index.html';
+        // Redirect to home page (root or index.html)
+        window.location.href = '/';
         break;
       case 'dashboard':
         // Stay on dashboard page or redirect to it
-        window.location.href = 'dashboard.html';
+        window.location.href = '/dashboard.html';
         break;
       case 'blogs':
         // Redirect to blogs page
-        window.location.href = 'blogs.html';
+        window.location.href = '/blogs.html';
         break;
       case 'research':
         // Redirect to research papers page
-        window.location.href = 'research-papers.html';
+        window.location.href = '/research-papers.html';
         break;
       default:
         console.log('Unknown navigation target:', section);
