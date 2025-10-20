@@ -226,7 +226,7 @@ function showInfo(nucleus, x, y) {
       <button class="info-close-btn" onclick="closeInfoBox()">&times;</button>
     </div>
     <div class="info-box-content">
-      <table>
+    <table>
         <tr><th>Property</th><th>Value</th></tr>
         <tr><td>Element Symbol</td><td><strong>${symbol}</strong></td></tr>
         <tr><td>Proton Number (Z)</td><td>${nucleus.Z}</td></tr>
@@ -236,7 +236,7 @@ function showInfo(nucleus, x, y) {
         <tr><td>Mass Excess (ELMA)</td><td>${nucleus.M_ELMA && nucleus.M_ELMA !== "-" ? nucleus.M_ELMA + " MeV" : "Not available"}</td></tr>
         <tr><td>Binding Energy (Exp)</td><td>${nucleus["B.E_exp"] && nucleus["B.E_exp"] !== "-" ? nucleus["B.E_exp"] + " MeV" : "Not available"}</td></tr>
         <tr><td>Binding Energy (ELMA)</td><td>${nucleus["B.E_ELMA"] && nucleus["B.E_ELMA"] !== "-" ? nucleus["B.E_ELMA"] + " MeV" : "Not available"}</td></tr>
-      </table>
+    </table>
     </div>
   `;
   
