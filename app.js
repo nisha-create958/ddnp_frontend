@@ -585,3 +585,71 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("chart").classList.add("active");
   document.getElementById("chart").classList.remove("hidden");
 });
+
+// Side Panel Functions
+function toggleSidePanel() {
+  const sidePanel = document.getElementById('sidePanel');
+  const overlay = document.getElementById('sidePanel-overlay');
+  const body = document.body;
+  
+  const isOpen = sidePanel.classList.contains('open');
+  
+  if (isOpen) {
+    sidePanel.classList.remove('open');
+    overlay.classList.remove('active');
+    body.classList.remove('side-panel-open');
+  } else {
+    sidePanel.classList.add('open');
+    overlay.classList.add('active');
+    body.classList.add('side-panel-open');
+  }
+}
+
+// Navigation functions
+function navigateTo(section) {
+  toggleSidePanel();
+  
+  setTimeout(() => {
+    switch(section) {
+      case 'home':
+        window.location.href = '/';
+        break;
+      case 'dashboard':
+        // Already on dashboard page
+        break;
+      case 'blogs':
+        window.location.href = '/blogs.html';
+        break;
+      case 'research':
+        window.location.href = '/research-papers.html';
+        break;
+      case 'talks':
+        window.location.href = '/talks.html';
+        break;
+      default:
+        console.log('Unknown navigation target:', section);
+    }
+  }, 300);
+}
+
+// Close side panel when clicking outside
+document.addEventListener('click', function(event) {
+  const sidePanel = document.getElementById('sidePanel');
+  const hamburgerMenu = document.querySelector('.hamburger-menu');
+  
+  if (sidePanel && sidePanel.classList.contains('open') && 
+      !sidePanel.contains(event.target) && 
+      hamburgerMenu && !hamburgerMenu.contains(event.target)) {
+    toggleSidePanel();
+  }
+});
+
+// Close side panel on escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    const sidePanel = document.getElementById('sidePanel');
+    if (sidePanel && sidePanel.classList.contains('open')) {
+      toggleSidePanel();
+    }
+  }
+});

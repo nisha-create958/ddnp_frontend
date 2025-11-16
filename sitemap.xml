@@ -36,4 +36,12 @@
     <priority>0.8</priority>
   </url>
   
+  <!-- Talks -->
+  <url>
+    <loc>https://ddnp.in/talks.html</loc>
+    <lastmod>2025-11-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
 </urlset>
